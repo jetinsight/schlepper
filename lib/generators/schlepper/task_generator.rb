@@ -4,7 +4,14 @@ module Schlepper
 
     def onetime_script
       @now = Time.now
-      template 'onetime_script.rb.erb', "#{Paths::TASK_DIR}/#{timestamped_task_name}.rb"
+      template(template_file, "#{Paths::TASK_DIR}/#{timestamped_task_name}.rb")
+    end
+
+    def template_file
+      project_template = File.join(Rails.root, ::Schlepper::Paths::TASK_DIR, 'template.rb.erb')
+      default_template = File.expand_path('../templates/onetime_script.rb.erb', __FILE__)
+
+      File.exist?(project_template) ? project_template :default_template
     end
 
     def stringified_timestamp
