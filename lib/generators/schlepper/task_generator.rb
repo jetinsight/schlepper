@@ -11,7 +11,7 @@ module Schlepper
       project_template = File.join(Rails.root, ::Schlepper::Paths::TASK_DIR, 'templates', 'task.rb.erb')
       default_template = File.expand_path('../templates/onetime_script.rb.erb', __FILE__)
 
-      File.exist?(project_template) ? project_template :default_template
+      File.exist?(project_template) ? project_template : default_template
     end
 
     def stringified_timestamp
