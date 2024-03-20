@@ -110,7 +110,7 @@ module Schlepper
             #{task.version_number},
             #{ActiveRecord::Base.connection.quote(task.owner)},
             #{ActiveRecord::Base.connection.quote(task.description.mb_chars.compose.limit(256))},
-            #{ActiveRecord::Base.connection.quote(Time.now.to_s(:db))}
+            #{ActiveRecord::Base.connection.quote(Time.now.to_fs(:db))}
           );
         SQL
       end
