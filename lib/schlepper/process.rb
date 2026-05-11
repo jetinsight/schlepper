@@ -22,6 +22,25 @@ module Schlepper
       STDOUT.sync = old_sync
     end
 
+    def run_one(version)
+      old_sync = STDOUT.sync
+      STDOUT.sync = true
+      create_table_if_necessary
+
+      file = Dir.glob("#{Rails.root}/#{Paths::TASK_DIR}/#{version}*.rb").first
+      raise ArgumentError, "No schlepper task found for version #{version}" if file.nil?
+
+      require file
+      klass = Schlepper::Task.children.last
+      process_one klass
+    rescue => e
+      offending_file = e.send(:caller_locations).first.path.split("/").last
+      puts "#{offending_file} caused an error: "
+      raise e
+    ensure
+      STDOUT.sync = old_sync
+    end
+
     private def create_table_if_necessary
       # table_exists? changes behavior in Rails 5.1
       finder_method = if ActiveRecord::VERSION::MAJOR >= 5
