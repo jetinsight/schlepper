@@ -96,6 +96,7 @@ won't run in a transaction, and returning `false` from `run` won't roll anything
 Also take note of the instance variable `@failure_message`. Setting this to something
 descriptive if your task fails provides meaningful output to the person running the task.
 
+Use `rake schlepper:run_one[version]` to start the task running process for a single task
 Use `rake schlepper:run` to start the task running process. The task running procedure is as follows:
 
 - Load the Rails app, the `schlepper:run` task inherits from `environment`
