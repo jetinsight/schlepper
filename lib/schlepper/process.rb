@@ -128,7 +128,7 @@ module Schlepper
           VALUES (
             #{task.version_number},
             #{ActiveRecord::Base.connection.quote(task.owner)},
-            #{ActiveRecord::Base.connection.quote(task.description.mb_chars.compose.limit(256))},
+            #{ActiveRecord::Base.connection.quote(task.description.unicode_normalize(:nfc).truncate_bytes(256, omission: nil))},
             #{ActiveRecord::Base.connection.quote(Time.now.to_fs(:db))}
           );
         SQL
